@@ -5,7 +5,9 @@ percentage exceeded 1%.
 
 
 # Installation
-Clone the GitHub repository.
+Clone the GitHub repository. Add the file newsdata.sql, which can be found at https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip.
+
+Then use the command psql -d news -f newsdata.sql to load the data.
 
 # Create view commands
 Add the following views to the news database:
