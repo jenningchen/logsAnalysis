@@ -8,15 +8,17 @@ import calendar
 
 
 def main():
-    '''Print most popular 3 articles of all time.'''
+    """Print most popular 3 articles of all time."""
     get_articles()
-    '''Print most popular authors of all time.'''
+    """Print most popular authors of all time."""
     get_authors()
-    '''Days where more than 1% of requests led to errors.'''
+    """Days where more than 1% of requests led to errors."""
     get_errors()
 
 
 def get_articles():
+    """Print ranking of most popular 3 articles of all time"""
+
     print("Ranking of most popular 3 articles of all time:")
     db = psycopg2.connect(database="news")
     c = db.cursor()
@@ -27,14 +29,16 @@ def get_articles():
     c.execute(query1)
     rows = c.fetchall()
 
-    '''Print result'''
-    for row in rows:
-        print("%s — %s views" % (row[0], row[1]))
+    """Print result"""
+    for title, views in rows:
+        print('\"{}\" — {} views'.format(title, views))
     db.close()
     print ("\n")
 
 
 def get_authors():
+    """"Print ranking of most popular authors of all time"""
+
     print("Ranking of most popular authors of all time:")
     db = psycopg2.connect(database="news")
     c = db.cursor()
@@ -46,13 +50,15 @@ def get_authors():
     rows = c.fetchall()
 
     '''Print result'''
-    for row in rows:
-        print("%s — %s views" % (row[0], row[1]))
+    for name, views in rows:
+        print('\"{}\" — {} views'.format(name, views))
     db.close()
     print("\n")
 
 
 def get_errors():
+    """"Print days where more than 1% of requests led to errors"""
+
     print("Day(s) where more than 1% of requests led to errors:")
     db = psycopg2.connect(database="news")
     c = db.cursor()
@@ -62,14 +68,13 @@ def get_errors():
     c.execute(query3)
     rows = c.fetchall()
 
-    '''Print result'''
-    for row in rows:
-        index = row[0].month
-        print("%s %s, %s — %.2f%% errors"
-              % (calendar.month_name[index], row[0].day, row[0].year,
-                 (100*row[1]/row[2])))
+    """Print result"""
+    for day1, errors, accessed in rows:
+        index = day1.month
+        print('{} {}, {} — {:.2f}% errors'.format(calendar.month_name[index],
+              day1.day, day1.year,(100*errors/accessed)))
     db.close()
     print("\n")
 
-
-main()
+if __name__ == '__main__':
+    main()
