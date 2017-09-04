@@ -17,7 +17,7 @@ Add the following views to the news database:
     create view articles_simplified as
        select name, title, path 
        from log, articles, authors
-       where (path like '%'||slug||'%') and (authors.id=articles.author);
+       where (path like '%'||slug) and (authors.id=articles.author);
 
     create view day_error as
         select date_trunc('day',time) as day1, count(*) as "num_errors"
