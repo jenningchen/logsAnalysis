@@ -14,21 +14,23 @@ The news database was included as part of the Udacity VM configuration and forms
 # Create view commands
 Add the following views to the news database:
 
-    create view articles_simplified as
-       select name, title, path 
-       from log, articles, authors
-       where (path like '%'||slug) and (authors.id=articles.author);
+```sql
+    CREATE VIEW articles_simplified AS
+       SELECT name, title, path 
+       FROM log, articles, authors
+       WHERE (path LIKE '%'||slug) AND (authors.id=articles.author);
 
-    create view day_error as
-        select date_trunc('day',time) as day1, count(*) as "num_errors"
-        from log 
-        where status='404 NOT FOUND' 
-        group by day1;
+    CREATE VIEW day_error AS
+        SELECT date_trunc('day',time) AS day1, count(*) AS "num_errors"
+        FROM log 
+        WHERE status='404 NOT FOUND' 
+        GROUP BY day1;
 
-    create view day_requests as
-        select date_trunc('day',time) as day2, count(*) as "num_accessed"
-        from log 
-        group by day2;
+    CREATE VIEW day_requests AS
+        SELECT date_trunc('day',time) AS day2, count(*) AS "num_accessed"
+        FROM log 
+        GROUP BY day2;
+```
         
 # Usage
 After creating the views in the news database, open newsdata.py in IDLE and run the script to generate the report.
