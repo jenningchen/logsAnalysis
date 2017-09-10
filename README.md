@@ -21,13 +21,13 @@ Add the following views to the news database:
        WHERE (path LIKE '%'||slug) AND (authors.id=articles.author);
 
     CREATE VIEW day_error AS
-        SELECT date_trunc('day',time) AS day1, count(*) AS "num_errors"
+        SELECT time::date AS day1, count(*) AS "num_errors"
         FROM log 
         WHERE status='404 NOT FOUND' 
         GROUP BY day1;
 
     CREATE VIEW day_requests AS
-        SELECT date_trunc('day',time) AS day2, count(*) AS "num_accessed"
+        SELECT time::date AS day2, count(*) AS "num_accessed"
         FROM log 
         GROUP BY day2;
 ```
